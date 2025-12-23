@@ -24,7 +24,6 @@ public class Post extends BaseIdAndTime {
     private String content;
     @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
-
     public Post(Member author, String title, String content) {
         this.author = author;
         this.title = title;
@@ -35,6 +34,8 @@ public class Post extends BaseIdAndTime {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
+
+        author.increaseActivityScore(1);
 
         return postComment;
     }
