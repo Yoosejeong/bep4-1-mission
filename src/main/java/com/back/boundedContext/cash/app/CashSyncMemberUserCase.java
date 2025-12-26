@@ -2,7 +2,10 @@ package com.back.boundedContext.cash.app;
 
 import com.back.boundedContext.cash.domain.CashMember;
 import com.back.boundedContext.cash.out.CashMemberRepository;
+import com.back.global.eventPublisher.EventPublisher;
 import com.back.shared.member.dto.MemberDto;
+import com.back.shared.post.dto.CashMemberDto;
+import com.back.shared.post.event.CashMemberCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +14,12 @@ import org.springframework.stereotype.Service;
 public class CashSyncMemberUserCase {
 
     private final CashMemberRepository cashMemberRepository;
+    private final EventPublisher eventPublisher;
 
     public CashMember syncMember(MemberDto member) {
+
+        boolean isNew = !cashMemberRepository.existsById(member.getId());
+
         CashMember _member = new CashMember(
                 member.getId(),
                 member.getCreateDate(),
@@ -22,6 +29,14 @@ public class CashSyncMemberUserCase {
                 member.getNickname(),
                 member.getActivityScore()
         );
+
+        if (isNew) {
+            eventPublisher.publish(
+                    new CashMemberCreatedEvent(
+                            new CashMemberDto(_member)
+                    )
+            );
+        }
 
         return cashMemberRepository.save(_member);
     }
