@@ -54,6 +54,4 @@ public class PostFacade {
         return postMemberRepository.findByUsername(username);
     }
 
-
-
 }
