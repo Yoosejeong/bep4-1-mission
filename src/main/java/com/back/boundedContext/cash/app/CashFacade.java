@@ -2,6 +2,7 @@ package com.back.boundedContext.cash.app;
 
 import com.back.boundedContext.cash.domain.CashMember;
 import com.back.boundedContext.cash.domain.Wallet;
+import com.back.shared.market.event.MarketOrderPaymentRequestedEvent;
 import com.back.shared.member.dto.MemberDto;
 import com.back.shared.post.dto.CashMemberDto;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class CashFacade {
     private final CashSyncMemberUserCase cashSyncMemberUserCase;
     private final CashCreateWalletUserCase cashCreateWalletUserCase;
     private final CashSupport cashSupport;
+    private final CashCompleteOrderPaymentUseCase cashCompleteOrderPaymentUseCase;
 
     @Transactional
     public CashMember syncMember(MemberDto member) {
@@ -35,5 +37,10 @@ public class CashFacade {
     @Transactional(readOnly = true)
     public Optional<Wallet> findWalletByHolder(CashMember holder) {
         return cashSupport.findByHolder(holder);
+    }
+
+    @Transactional
+    public void handle(MarketOrderPaymentRequestedEvent event) {
+        cashCompleteOrderPaymentUseCase.handle(event);
     }
 }
