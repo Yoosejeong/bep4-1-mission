@@ -1,5 +1,0 @@
-2025-12-29 14:59:53.997189+09:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM CASH_WALLET \000d\000a\000d\000a[*]SELECT * FROM CASH_MEMBER"; SQL statement:
-SELECT * FROM CASH_WALLET 
-
-SELECT * FROM CASH_MEMBER [42000-240]
