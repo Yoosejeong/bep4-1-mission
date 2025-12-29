@@ -1,7 +1,6 @@
 package com.back.boundedContext.member.app;
 
 import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.member.domain.MemberPolicy;
 import com.back.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import java.util.Optional;
 public class MemberFacade {
     private final MemberJoinUseCase memberJoinUserCase;
     private final MemberSupport memberSupport;
-    private final MemberGetRandomSecureTipUserCase memberGetRandomSecureTipUserCase;
+    private final MemberGetRandomSecureTipUseCase memberGetRandomSecureTipUserCase;
 
     @Transactional(readOnly = true)
     public long count() {
