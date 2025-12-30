@@ -4,7 +4,6 @@ import com.back.boundedContext.cash.domain.CashMember;
 import com.back.boundedContext.cash.out.CashMemberRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.shared.member.dto.MemberDto;
-import com.back.shared.post.dto.CashMemberDto;
 import com.back.shared.post.event.CashMemberCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ public class CashSyncMemberUserCase {
         if (isNew) {
             eventPublisher.publish(
                     new CashMemberCreatedEvent(
-                            new CashMemberDto(_member)
+                            _member.toDto()
                     )
             );
         }
